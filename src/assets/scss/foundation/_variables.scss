@@ -1,0 +1,19 @@
+//colors
+$pink: rgb(231, 0, 113);
+$gray: rgb(32, 23, 31);
+$blue: rgb(0, 153, 223);
+$color-text: black;
+
+// For SmartPhone
+$sp-width: 375;
+$sp-width-breakpoint: $sp-width * 2;
+$sp-window-gap: 2rem;
+$sp-grid-gap: 0.5rem;
+$sp-grid-steps: 12;
+
+// For PC
+$pc-layout-width: 1366;
+$pc-window-gap: 4rem;
+$pc-min-width: calc(#{$pc-layout-width}px + #{$pc-window-gap * 2});
+$pc-grid-gap: 2rem;
+$pc-grid-steps: 12;
