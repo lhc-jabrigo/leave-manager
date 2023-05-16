@@ -1,11 +1,9 @@
 <template lang="">
   <Header />
-  <div>
-    <div class="u-layout">Employee</div>
-  </div>
+  <router-view></router-view>
 </template>
 <script>
-import Header from "./Header.vue";
+import Header from "../components/Header.vue";
 
 export default {
   name: "Employees",
@@ -14,4 +12,4 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style lang="scss" scoped></style>

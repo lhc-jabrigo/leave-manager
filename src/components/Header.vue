@@ -12,7 +12,7 @@
         <Navbar />
       </div>
       <div class="c-header__user">
-        <span class="c-header__user__name">Hi, Admin</span>
+        <span class="c-header__user__name u-font-rancho">Hi, Admin</span>
         <button
           @click.prevent="logout"
           type="button"
@@ -66,6 +66,7 @@ export default {
   &__user {
     &__name {
       margin-right: 2rem;
+      font-size: 2rem;
     }
   }
 }

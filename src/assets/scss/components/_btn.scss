@@ -10,6 +10,20 @@
     &:hover {
         background-color: #fff;
         color: $gray;
-        opacity: 0.7;
+    }
+
+    &.is-full {
+        display: block;
+        width: 100%;
+    }
+
+    &.is-reverse {
+        background-color: #fff;
+        color: $gray;
+
+        &:hover {
+            background-color: $gray;
+            color: #fff;
+        }
     }
 }

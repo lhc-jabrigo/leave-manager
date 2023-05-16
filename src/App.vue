@@ -11,11 +11,13 @@ export default {
 <style lang="scss">
 #app {
   background: url("@/assets/img/bg-yellow.jpg") no-repeat center center/cover;
-  height: 100vh;
+  background-attachment: fixed;
+  min-height: 100vh;
   position: relative;
+  padding-bottom: 10rem;
 
   &::after {
-    position: absolute;
+    position: fixed;
     content: "";
     height: 10rem;
     width: 10rem;
