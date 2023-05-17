@@ -6,6 +6,9 @@ import Employees from "../views/Employees.vue";
 import EmployeesList from "../views/EmployeesList.vue";
 import LeaveManager from "../views/LeaveManager.vue";
 import AddEmployee from "../views/AddEmployee.vue";
+import UpdateEmployee from "../views/UpdateEmployee.vue";
+import AddLeave from "../views/AddLeave.vue";
+import UpdateLeave from "../views/UpdateLeave.vue";
 
 const routes = [
   {
@@ -28,11 +31,23 @@ const routes = [
         path: "add",
         component: AddEmployee,
       },
+      {
+        path: "update/:id",
+        component: UpdateEmployee,
+      },
     ],
   },
   {
     path: "/leave-manager",
     component: LeaveManager,
+  },
+  {
+    path: "/leave/add",
+    component: AddLeave,
+  },
+  {
+    path: "/leave/edit/:id",
+    component: UpdateLeave,
   },
 ];
 

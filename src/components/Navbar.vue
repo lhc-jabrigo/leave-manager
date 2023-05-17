@@ -12,6 +12,9 @@
       class="c-navbar__link"
       >Leave Manager</router-link
     >
+    <router-link to="/leave/add" active-class="is-active" class="c-navbar__link"
+      >File Leave</router-link
+    >
   </div>
 </template>
 <script>

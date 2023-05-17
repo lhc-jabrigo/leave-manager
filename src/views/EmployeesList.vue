@@ -37,7 +37,7 @@ export default {
     }
 
     this.$store.dispatch("getEmployees");
-    this.employees = JSON.parse(this.$store.state.employees);
+    this.employees = await JSON.parse(this.$store.state.employees);
   },
 };
 </script>

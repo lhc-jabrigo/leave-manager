@@ -26,13 +26,13 @@
     </div>
     <div class="c-card__btns">
       <button
-        class="c-card__btns__btn is-edit c-btn"
+        class="c-card__btns__btn is-green c-btn"
         @click.prevent="updateEmployee(employee.id)"
       >
         Edit
       </button>
       <button
-        class="c-card__btns__btn is-delete c-btn"
+        class="c-card__btns__btn is-red c-btn"
         @click.prevent="deleteEmployee(employee.id)"
       >
         Delete
@@ -48,6 +48,10 @@ export default {
     deleteEmployee(id) {
       this.$store.dispatch("deleteEmployee", id);
     },
+    updateEmployee(id) {
+      this.$router.push(`/employees/update/${id}`);
+      this.$store.dispatch("getEmployee", id);
+    },
   },
 };
 </script>
@@ -60,6 +64,7 @@ export default {
   &__id {
     color: $blue;
     margin-bottom: 1rem;
+    display: none;
   }
 
   &__name {
@@ -70,14 +75,27 @@ export default {
   &__position {
     font-size: 1.6rem;
     margin-bottom: 1rem;
+    border-bottom: 1px solid gray;
+    padding-bottom: 1rem;
   }
 
   &__leaveCount {
     margin-bottom: 2rem;
+    display: flex;
 
     &__label {
       font-weight: bold;
       margin-bottom: 0.5rem;
+      margin-right: 1rem;
+    }
+
+    &__sub {
+      margin-right: 1rem;
+      font-weight: bold;
+    }
+
+    &__span {
+      font-weight: normal;
     }
   }
 
@@ -86,31 +104,6 @@ export default {
       width: 5rem;
       width: 6rem;
       text-align: center;
-
-      &.is-edit {
-        background: transparent;
-        margin-right: 0.5rem;
-        color: green;
-        border: 1px solid green;
-
-        &:hover {
-          background: green;
-          color: #fff;
-          opacity: 1;
-        }
-      }
-      &.is-delete {
-        background: transparent;
-        margin-right: 0.5rem;
-        color: red;
-        border: 1px solid red;
-
-        &:hover {
-          background: red;
-          color: #fff;
-          opacity: 1;
-        }
-      }
     }
   }
 }

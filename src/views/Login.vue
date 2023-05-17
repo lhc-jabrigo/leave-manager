@@ -56,6 +56,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.c-form {
+  height: calc(100vh - 10rem);
+}
 .logo-head {
   width: 10rem;
 }
