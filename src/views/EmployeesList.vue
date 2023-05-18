@@ -31,8 +31,8 @@ export default {
     };
   },
   async mounted() {
-    let user = localStorage.getItem("user");
-    if (!user) {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.role) {
       this.$router.push("/login");
     }
 
@@ -46,7 +46,6 @@ export default {
   margin-bottom: 2rem;
   display: inline-block;
 }
-
 .employees {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

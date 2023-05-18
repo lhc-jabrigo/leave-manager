@@ -9,10 +9,12 @@
             class="c-header__right__logo__img"
           />
         </h1>
-        <Navbar />
+        <Navbar :user="user" />
       </div>
       <div class="c-header__user">
-        <span class="c-header__user__name u-font-rancho">Hi, Admin</span>
+        <span class="c-header__user__name u-font-rancho"
+          >Hi, {{ user.role ? "Admin" : user.email }}</span
+        >
         <button
           @click.prevent="logout"
           type="button"
@@ -33,11 +35,21 @@ export default {
   components: {
     Navbar,
   },
+  data() {
+    return {
+      user: {},
+    };
+  },
   methods: {
     logout() {
       localStorage.removeItem("user");
       this.$router.push("/login");
     },
+  },
+  mounted() {
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    this.user = user ? user : null;
   },
 };
 </script>

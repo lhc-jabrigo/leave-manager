@@ -14,6 +14,16 @@
         placeholder="Enter Password"
         class="c-form__inner__input"
       />
+      <label for="role" class="c-form__inner__check-label">
+        <input
+          type="checkbox"
+          name="role"
+          class="c-form__inner__check-label__check"
+          value="admin"
+          v-model="userInfo.role"
+        />
+        Admin
+      </label>
       <p class="c-form__inner__error">{{ error.length > 0 ? error : "" }}</p>
       <button type="button" class="c-btn is-full" @click.prevent="login">
         Login
@@ -29,6 +39,7 @@ export default {
       userInfo: {
         email: "",
         password: "",
+        role: false,
       },
       error: "",
     };
@@ -42,13 +53,13 @@ export default {
       } else if (!this.userInfo.email) {
         this.error = "Enter valid email.";
       } else if (this.userInfo.email && this.userInfo.password) {
-        localStorage.setItem("user", JSON.stringify(this.userInfo));
+        this.$store.dispatch("loggedAsAdmin", this.userInfo);
         this.$router.push("/");
       }
     },
   },
   mounted() {
-    let user = localStorage.getItem("user");
+    let user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       this.$router.push("/");
     }

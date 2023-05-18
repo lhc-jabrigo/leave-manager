@@ -7,7 +7,7 @@ export default {
   },
   async getLeave(id) {
     let leave = await axios.get(`http://localhost:3000/leaves/${id}`);
-    return leave;
+    return leave.data;
   },
   async addLeave(leaveInfo) {
     await axios.post("http://localhost:3000/leaves/", leaveInfo);

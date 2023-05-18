@@ -8,11 +8,15 @@ const loadData = async () => {
 
 export default createStore({
   state: {
-    isAuthenticated: false,
+    isAdmin: false,
     employees: localStorage.getItem("employees"),
   },
   getters: {},
   mutations: {
+    LOGGED_AS_ADMIN(state, userInfo) {
+      state.isAdmin = userInfo?.role ? true : false;
+      localStorage.setItem("user", JSON.stringify(userInfo));
+    },
     async GET_EMPLOYEES(state) {
       loadData();
       return state.employees;
@@ -37,6 +41,9 @@ export default createStore({
     },
   },
   actions: {
+    loggedAsAdmin({ commit }, userInfo) {
+      commit("LOGGED_AS_ADMIN", userInfo);
+    },
     getEmployees({ commit }) {
       commit("GET_EMPLOYEES");
     },

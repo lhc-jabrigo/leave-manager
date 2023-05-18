@@ -3,7 +3,11 @@
     <router-link to="/" active-class="is-active" class="c-navbar__link"
       >Home</router-link
     >
-    <router-link to="/employees" active-class="is-active" class="c-navbar__link"
+    <router-link
+      v-if="user.role"
+      to="/employees"
+      active-class="is-active"
+      class="c-navbar__link"
       >Employees</router-link
     >
     <router-link
@@ -12,14 +16,12 @@
       class="c-navbar__link"
       >Leave Manager</router-link
     >
-    <router-link to="/leave/add" active-class="is-active" class="c-navbar__link"
-      >File Leave</router-link
-    >
   </div>
 </template>
 <script>
 export default {
   name: "Navbar",
+  props: ["user"],
 };
 </script>
 <style lang="scss" scoped>

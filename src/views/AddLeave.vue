@@ -5,7 +5,7 @@
       <h1 class="c-form__ttl u-font-rancho">Enter Leave Details</h1>
       <div class="c-form__inner">
         <select class="c-form__inner__input" v-model="leaveInfo.leaveType">
-          <option value="" selected disabled hidden>Select leaveType</option>
+          <option value="" selected disabled>Select leaveType</option>
           <option value="SL">SL</option>
           <option value="VL">VL</option>
         </select>
@@ -33,7 +33,7 @@
           class="c-form__inner__input is-short"
           v-model="leaveInfo.leaveDuration"
         >
-          <option value="" selected disabled hidden>Duration</option>
+          <option value="" selected disabled>Duration</option>
           <option value="0.5">0.5</option>
           <option value="1">1</option>
         </select>
@@ -45,6 +45,7 @@
           placeholder="Provide reason for leave."
         >
         </textarea>
+        <p class="c-form__inner__error" v-if="error">{{ error }}</p>
         <button type="button" class="c-btn" @click.prevent="addLeave">
           File leave
         </button>
@@ -70,24 +71,35 @@ export default {
         endDate: "",
         leaveDuration: "",
         reason: "",
-        status: "Pending",
+        status: "pending",
       },
+      error: "",
     };
   },
   methods: {
     addLeave() {
-      this.$leaves.addLeave(this.leaveInfo);
-      this.$router.push("/leave-manager");
+      if (
+        !this.leaveInfo.filedBy ||
+        !this.leaveInfo.leaveType ||
+        !this.leaveInfo.startDate ||
+        !this.leaveInfo.endDate ||
+        !this.leaveInfo.leaveDuration ||
+        !this.leaveInfo.reason
+      ) {
+        this.error = "Check empty field!";
+      } else {
+        this.$leaves.addLeave(this.leaveInfo);
+        this.$router.push("/leave-manager");
+      }
     },
   },
   mounted() {
-    let user = localStorage.getItem("user");
+    let user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
       this.$router.push("/login");
     }
 
-    let currentUser = JSON.parse(user);
-    this.leaveInfo.filedBy = currentUser.email;
+    this.leaveInfo.filedBy = user.email;
   },
 };
 </script>

@@ -10,6 +10,12 @@ export default {
   components: {
     Header,
   },
+  mounted() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.role) {
+      this.$router.push("/login");
+    }
+  },
 };
 </script>
 <style lang="scss" scoped></style>

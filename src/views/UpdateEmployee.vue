@@ -64,7 +64,7 @@ export default {
         !this.employeeInfo.leaveCount.starting ||
         !this.employeeInfo.leaveCount.used
       ) {
-        this.error = "Check empty input!";
+        this.error = "Check empty field!";
       } else {
         this.$store.dispatch("updateEmployee", this.employeeInfo);
         this.$router.push("/employees");
@@ -72,8 +72,12 @@ export default {
     },
   },
   async mounted() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.role) {
+      this.$router.push("/login");
+    }
+
     this.employeeInfo = localStorage.getItem("currentEmployee");
-    this.employeeInfo = JSON.parse(localStorage.getItem("currentEmployee"));
   },
 };
 </script>

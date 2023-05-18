@@ -1,6 +1,7 @@
 .c-table {
-    width: 100%;
-    background-color: rgba($color: #fff, $alpha: 0.5);
+    width: calc(100% - 1rem);
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.5);
     outline: 10px solid rgba(255, 255, 255, 0.5);
     border-collapse: collapse;
 
@@ -11,7 +12,7 @@
     &__row {
         &__data {
             text-align: center;
-            padding: 0.8rem 0;
+            padding: 0.8rem 0.5rem;
             border-bottom: 1px solid #000;
 
             &.is-action {

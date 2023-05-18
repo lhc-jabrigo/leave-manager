@@ -45,8 +45,8 @@
           placeholder="Provide reason for leave."
         >
         </textarea>
-        <button type="button" class="c-btn" @click.prevent="addLeave">
-          File leave
+        <button type="button" class="c-btn" @click.prevent="updateLeave">
+          Update leave
         </button>
       </div>
     </div>
@@ -70,27 +70,26 @@ export default {
         endDate: "",
         leaveDuration: "",
         reason: "",
-        status: "Pending",
+        status: "pending",
       },
     };
   },
   methods: {
-    addLeave() {
-      this.$leaves.addLeave(this.leaveInfo);
+    updateLeave() {
+      this.$leaves.updateLeave(this.leaveInfo);
       this.$router.push("/leave-manager");
     },
   },
   async mounted() {
-    let user = localStorage.getItem("user");
+    let user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
       this.$router.push("/login");
     }
 
-    let currentUser = JSON.parse(user);
-    this.leaveInfo.filedBy = currentUser.email;
+    this.leaveInfo.filedBy = user.email;
 
     let leave = await this.$leaves.getLeave(this.$route.params.id);
-    this.leaveInfo = leave.data;
+    this.leaveInfo = leave;
   },
 };
 </script>

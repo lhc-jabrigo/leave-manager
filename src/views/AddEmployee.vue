@@ -10,7 +10,7 @@
           class="c-form__inner__input"
         />
         <select class="c-form__inner__input" v-model="employeeInfo.position">
-          <option value="" selected disabled hidden>Select position</option>
+          <option value="" selected disabled>Select position</option>
           <option value="Web Developer">Web Developer</option>
           <option value="Web Designer">Web Designer</option>
         </select>
@@ -64,12 +64,18 @@ export default {
         !this.employeeInfo.leaveCount.starting ||
         !this.employeeInfo.leaveCount.used
       ) {
-        this.error = "Check empty input!";
+        this.error = "Check empty field!";
       } else {
         this.$store.dispatch("addEmployee", this.employeeInfo);
         this.$router.push("/employees");
       }
     },
+  },
+  mounted() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.role) {
+      this.$router.push("/login");
+    }
   },
 };
 </script>
