@@ -17,15 +17,29 @@
         <input
           type="number"
           min="0"
-          v-model="employeeInfo.leaveCount.starting"
-          placeholder="Enter Starting Leaves"
+          v-model="employeeInfo.vlCount.starting"
+          placeholder="Enter Starting Vacation Leaves"
           class="c-form__inner__input"
         />
         <input
           type="number"
           min="0"
-          v-model="employeeInfo.leaveCount.used"
-          placeholder="Enter Used Leaves"
+          v-model="employeeInfo.vlCount.used"
+          placeholder="Enter Used Vacation Leaves"
+          class="c-form__inner__input"
+        />
+        <input
+          type="number"
+          min="0"
+          v-model="employeeInfo.slCount.starting"
+          placeholder="Enter Starting Sick Leaves"
+          class="c-form__inner__input"
+        />
+        <input
+          type="number"
+          min="0"
+          v-model="employeeInfo.slCount.used"
+          placeholder="Enter Used Sick Leaves"
           class="c-form__inner__input"
         />
         <p class="c-form__inner__error" v-if="error">{{ error }}</p>
@@ -48,9 +62,13 @@ export default {
       employeeInfo: {
         name: "",
         position: "",
-        leaveCount: {
+        vlCount: {
           starting: "",
-          used: "",
+          used: 0,
+        },
+        slCount: {
+          starting: "",
+          used: 0,
         },
       },
       error: null,
@@ -61,8 +79,8 @@ export default {
       if (
         !this.employeeInfo.name ||
         !this.employeeInfo.position ||
-        !this.employeeInfo.leaveCount.starting ||
-        !this.employeeInfo.leaveCount.used
+        !this.employeeInfo.vlCount.starting ||
+        !this.employeeInfo.slCount.starting
       ) {
         this.error = "Check empty field!";
       } else {

@@ -7,11 +7,14 @@
         >Add New Employee</router-link
       >
 
-      <div class="employees">
+      <h3 v-if="employees.length === 0">No registered employees.</h3>
+
+      <div class="employees" v-if="employees.length !== 0">
         <EmployeeCard
           v-for="employee in employees"
           :key="employee.id"
           :employee="employee"
+          @employee-deleted="reloadData"
         />
       </div>
     </div>
@@ -25,10 +28,17 @@ export default {
   components: {
     EmployeeCard,
   },
+  inject: ["$employees"],
   data() {
     return {
       employees: [],
     };
+  },
+  methods: {
+    async reloadData() {
+      let employees = await this.$employees.getAllEmployees();
+      this.employees = employees;
+    },
   },
   async mounted() {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -36,8 +46,8 @@ export default {
       this.$router.push("/login");
     }
 
-    this.$store.dispatch("getEmployees");
-    this.employees = await JSON.parse(this.$store.state.employees);
+    let employees = await this.$employees.getAllEmployees();
+    this.employees = employees;
   },
 };
 </script>

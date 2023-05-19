@@ -9,6 +9,12 @@ export default {
     let employee = await axios.get(`http://localhost:3000/employees/${id}`);
     return employee.data;
   },
+  async getEmployeeByEmail(email) {
+    let employee = await axios.get(
+      `http://localhost:3000/employees/?name=${email}`
+    );
+    return employee.data;
+  },
   async addEmployee(employeeInfo) {
     await axios.post("http://localhost:3000/employees/", employeeInfo);
   },

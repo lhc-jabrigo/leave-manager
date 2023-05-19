@@ -17,15 +17,29 @@
         <input
           type="number"
           min="0"
-          v-model="employeeInfo.leaveCount.starting"
-          placeholder="Enter Starting Leaves"
+          v-model="employeeInfo.vlCount.starting"
+          placeholder="Enter Starting Vacation Leaves"
           class="c-form__inner__input"
         />
         <input
           type="number"
           min="0"
-          v-model="employeeInfo.leaveCount.used"
-          placeholder="Enter Used Leaves"
+          v-model="employeeInfo.vlCount.used"
+          placeholder="Enter Used Vacation Leaves"
+          class="c-form__inner__input"
+        />
+        <input
+          type="number"
+          min="0"
+          v-model="employeeInfo.slCount.starting"
+          placeholder="Enter Starting Sick Leaves"
+          class="c-form__inner__input"
+        />
+        <input
+          type="number"
+          min="0"
+          v-model="employeeInfo.slCount.used"
+          placeholder="Enter Used Sick Leaves"
           class="c-form__inner__input"
         />
         <p class="c-form__inner__error" v-if="error">{{ error }}</p>
@@ -43,12 +57,17 @@
 <script>
 export default {
   name: "UpdateEmployee",
+  inject: ["$employees"],
   data() {
     return {
       employeeInfo: {
         name: "",
         position: "",
-        leaveCount: {
+        vlCount: {
+          starting: "",
+          used: "",
+        },
+        slCount: {
           starting: "",
           used: "",
         },
@@ -61,12 +80,14 @@ export default {
       if (
         !this.employeeInfo.name ||
         !this.employeeInfo.position ||
-        !this.employeeInfo.leaveCount.starting ||
-        !this.employeeInfo.leaveCount.used
+        !this.employeeInfo.vlCount.starting ||
+        !this.employeeInfo.vlCount.used ||
+        !this.employeeInfo.slCount.starting ||
+        !this.employeeInfo.slCount.used
       ) {
         this.error = "Check empty field!";
       } else {
-        this.$store.dispatch("updateEmployee", this.employeeInfo);
+        this.$employees.updateEmployee(this.employeeInfo);
         this.$router.push("/employees");
       }
     },
@@ -77,7 +98,8 @@ export default {
       this.$router.push("/login");
     }
 
-    this.employeeInfo = localStorage.getItem("currentEmployee");
+    let employee = await this.$employees.getEmployee(this.$route.params.id);
+    this.employeeInfo = employee;
   },
 };
 </script>

@@ -10,21 +10,36 @@
       {{ employee.position }}
     </p>
     <div class="c-card__leaveCount">
-      <p class="c-card__leaveCount__label">Leave Count</p>
+      <p class="c-card__leaveCount__label">VL Count</p>
       <p class="c-card__leaveCount__sub">
         <span class="c-card__leaveCount__span">Starting:</span>
-        {{ employee.leaveCount.starting }}
+        {{ employee.vlCount?.starting }}
       </p>
       <p class="c-card__leaveCount__sub">
         <span class="c-card__leaveCount__span">Used:</span>
-        {{ employee.leaveCount.used }}
+        {{ employee.vlCount?.used }}
       </p>
       <p class="c-card__leaveCount__sub">
         <span class="c-card__leaveCount__span">Remaining:</span>
-        {{ employee.leaveCount.starting - employee.leaveCount.used }}
+        {{ employee.vlCount?.starting - employee.vlCount?.used }}
       </p>
     </div>
-    <div class="c-card__btns">
+    <div class="c-card__leaveCount">
+      <p class="c-card__leaveCount__label">SL Count</p>
+      <p class="c-card__leaveCount__sub">
+        <span class="c-card__leaveCount__span">Starting:</span>
+        {{ employee.slCount?.starting }}
+      </p>
+      <p class="c-card__leaveCount__sub">
+        <span class="c-card__leaveCount__span">Used:</span>
+        {{ employee.slCount?.used }}
+      </p>
+      <p class="c-card__leaveCount__sub">
+        <span class="c-card__leaveCount__span">Remaining:</span>
+        {{ employee.slCount?.starting - employee.slCount?.used }}
+      </p>
+    </div>
+    <div class="c-card__btns" v-if="user.role">
       <button
         class="c-card__btns__btn is-green c-btn"
         @click.prevent="updateEmployee(employee.id)"
@@ -44,14 +59,29 @@
 export default {
   name: "EmployeeCard",
   props: ["employee"],
+  inject: ["$bus", "$employees"],
+  data() {
+    return {
+      user: {},
+    };
+  },
   methods: {
-    deleteEmployee(id) {
-      this.$store.dispatch("deleteEmployee", id);
+    async deleteEmployee(id) {
+      await this.$employees.deleteEmployee(id);
+      this.$emit("employeeDeleted");
     },
-    updateEmployee(id) {
+    async updateEmployee(id) {
       this.$router.push(`/employees/update/${id}`);
-      this.$store.dispatch("getEmployee", id);
+      await this.$employees.getEmployee(id);
     },
+  },
+  mounted() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      this.$router.push("/login");
+    }
+
+    this.user = user ? user : null;
   },
 };
 </script>
@@ -80,7 +110,6 @@ export default {
   }
 
   &__leaveCount {
-    margin-bottom: 2rem;
     display: flex;
 
     &__label {
@@ -100,6 +129,8 @@ export default {
   }
 
   &__btns {
+    margin-top: 2rem;
+
     &__btn {
       width: 5rem;
       width: 6rem;

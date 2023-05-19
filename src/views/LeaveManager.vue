@@ -10,7 +10,7 @@
       >File New Leave</router-link
     >
 
-    <h3 v-if="leave.length === 0">No leave filed</h3>
+    <h3 v-if="leave.length === 0">No filed leaves.</h3>
 
     <table v-if="leave.length !== 0" class="c-table">
       <thead class="c-table__thead">
@@ -78,7 +78,7 @@
               </button>
               <button
                 class="c-btn is-red"
-                @click.prevent="deleteLeave(leave.id)"
+                @click.prevent="cancelLeave(leave.id)"
               >
                 Cancel
               </button>
@@ -94,7 +94,7 @@ import Header from "../components/Header.vue";
 
 export default {
   name: "LeaveManager",
-  inject: ["$leaves"],
+  inject: ["$employees", "$leaves"],
   components: {
     Header,
   },
@@ -111,30 +111,27 @@ export default {
         status: "",
       },
       isClamped: true,
-      isApproved: true,
     };
   },
   methods: {
     updateLeave(id) {
       this.$router.push(`leave/edit/${id}`);
     },
-    deleteLeave(id) {
-      this.$leaves.deleteLeave(id);
-      this.loadData();
+    async cancelLeave(id) {
+      await this.$leaves.deleteLeave(id);
+      await this.loadData();
     },
     async approveLeave(id) {
       let leave = await this.$leaves.getLeave(id);
       leave.status = "approved";
-      this.$leaves.updateLeave(leave);
-      this.$router.push("/leave-manager");
-      this.loadData();
+      await this.$leaves.updateLeave(leave);
+      await this.loadData();
     },
     async rejectLeave(id) {
       let leave = await this.$leaves.getLeave(id);
       leave.status = "rejected";
-      this.$leaves.updateLeave(leave);
-      this.$router.push("/leave-manager");
-      this.loadData();
+      await this.$leaves.updateLeave(leave);
+      await this.loadData();
     },
     toggleClamp() {
       this.isClamped = !this.isClamped;

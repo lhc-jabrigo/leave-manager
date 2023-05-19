@@ -8,4 +8,11 @@ module.exports = defineConfig({
       },
     },
   },
+  pages: {
+    index: {
+      // entry for the page
+      entry: "src/main.js",
+      title: "LH&Creatives: Leave Manager",
+    },
+  },
 });
